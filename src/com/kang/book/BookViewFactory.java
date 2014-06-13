@@ -11,7 +11,6 @@ import com.kang.book.UI.BookView;
 import com.kang.book.Util.SharedPreferencesUtil;
 
 public class BookViewFactory {
-	222
 	String strTest;
 	Context context;
 	String bookcontext;
