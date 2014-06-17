@@ -9,28 +9,27 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="8" />
 
     <application
         android:name="com.kang.book.Application.BookApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Black.NoTitleBar" >
+        android:theme="@android:style/Theme.Black.NoTitleBar">
         <meta-data
             android:name="bool_url"
             android:value="http://www.siluke.com/0/73/73503/" >
         </meta-data>
 
         <activity
-            android:name="com.kang.book.Activity.MainActivity"
-            android:label="@string/app_name" >
+            android:name=".Activity.MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.kang.book.Activity.BookChaptionActivity" />
+        <activity android:name=".Activity.BookChaptionActivity"/>
+        <service android:name=".service.BookService"></service>
     </application>
-
 </manifest>

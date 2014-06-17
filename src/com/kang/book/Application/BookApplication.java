@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import com.kang.book.R;
+import com.kang.book.service.BookService;
 
 import android.app.Application;
 import android.app.Notification;
@@ -35,7 +36,10 @@ public class BookApplication extends Application {
 		super.onCreate();
 		mContext = this;
 		duckApplication = this;
+		
 //		mThread.start();
+		
+		startService(new Intent(this,BookService.class));
 	}
 
 	Handler myHandler = new Handler() {

@@ -21,7 +21,7 @@ public class ChaptionListAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return 3;//list.size();
+		return list.size();
 	}
 
 	@Override

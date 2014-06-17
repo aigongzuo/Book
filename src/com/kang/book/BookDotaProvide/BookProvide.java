@@ -9,6 +9,7 @@ import com.kang.book.Bean.BookChaptherBean;
 import com.kang.book.Util.AssetsUtil;
 import com.kang.book.Util.SharedPreferencesUtil;
 import com.kang.book.Util.StrParserUtil;
+import com.kang.book.service.BookService;
 
 public class BookProvide {
 
@@ -73,7 +74,7 @@ public class BookProvide {
 	}
 
 	public int getNowLoadChaption() {
-		return listCaption.size();
+		return BookService.loadChaption;
 	}
 
 	public boolean isHaveChaption(int chaption) {

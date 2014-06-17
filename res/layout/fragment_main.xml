@@ -14,7 +14,8 @@
         android:id="@+id/rl_tittle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/tittle_bg">
+        android:background="@drawable/tittle_bg"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/back_button"
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:singleLine="true"
-            android:text="1111"
+            android:text="@string/app_name"
             android:textColor="#d5d5d5"
             android:textSize="20dip" />
 
@@ -47,7 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_tittle"
         android:background="@drawable/tittle_bg"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/fond_layout"

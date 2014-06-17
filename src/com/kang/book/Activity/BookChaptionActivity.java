@@ -11,9 +11,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kang.book.R;
 import com.kang.book.Adapter.ChaptionListAdapter;
 import com.kang.book.BookDotaProvide.BookProvide;
+import com.kang.book.R;
 
 public class BookChaptionActivity extends Activity implements OnItemClickListener {
 	ListView chaption_list;
@@ -54,7 +54,11 @@ public class BookChaptionActivity extends Activity implements OnItemClickListene
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setIcon(R.drawable.ic_launcher);
 		builder.setTitle("提示");
-		builder.setMessage("该章节正在下载请保持网络畅通，当前正在下载第" + (number+1) + "章！");
+		if(number ==0){
+			builder.setMessage("该章节正在下载请保持网络畅通!");
+		}else {
+			builder.setMessage("该章节正在下载请保持网络畅通，当前正在下载第" + (number+1) + "章!");
+		}
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 			}
