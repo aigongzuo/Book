@@ -8,6 +8,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.MessageQueue.IdleHandler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -25,6 +27,7 @@ import com.kang.book.BookViewFactory;
 import com.kang.book.R;
 import com.kang.book.Adapter.ViewPagerAdapter;
 import com.kang.book.BookDotaProvide.BookProvide;
+import com.kang.book.UI.BookView;
 import com.kang.book.Util.SharedPreferencesUtil;
 
 public class MainActivity extends Activity implements OnPageChangeListener, OnClickListener, OnTouchListener {
@@ -36,6 +39,20 @@ public class MainActivity extends Activity implements OnPageChangeListener, OnCl
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_main);
 		initViewPage();
+
+		Looper.myQueue().addIdleHandler(new IdleHandler() {
+
+			@Override
+			public boolean queueIdle() {
+				BookView.viewheight =viewpager.getHeight() -72;
+				
+				List<View> viewlist = bookViewFactory.reInitListView();
+				adapter = new ViewPagerAdapter(viewlist);
+				viewpager.setAdapter(adapter);
+				viewpager.setCurrentItem(bookViewFactory.getCountVideo(), false);
+				return false;
+			}
+		});
 
 	}
 
@@ -66,13 +83,9 @@ public class MainActivity extends Activity implements OnPageChangeListener, OnCl
 		BookProvide bookfile = new BookProvide(this);
 		bookfile.LoadCaption();
 		bookViewFactory = new BookViewFactory(this);
-		List<View> viewlist = bookViewFactory.reInitListView();
 
 		viewpager = (ViewPager) findViewById(R.id.viewpager);
 		viewpager.setOnPageChangeListener(this);
-		adapter = new ViewPagerAdapter(viewlist);
-		viewpager.setAdapter(adapter);
-		viewpager.setCurrentItem(bookViewFactory.getCountVideo(), false);
 		viewpager.setOnTouchListener(this);
 	}
 
@@ -141,20 +154,17 @@ public class MainActivity extends Activity implements OnPageChangeListener, OnCl
 			sharedPreferencesUtil.SetReadNote(arg0);
 		}
 		parg0 = arg0;
-		
-		if(arg0==adapter.getCount()-1){
-			Dialog alertDialog = new AlertDialog.Builder(this). 
-	                setTitle("提示"). 
-	                setMessage("连载小说，联网自动加载剩余章节!"). 
-	                setIcon(R.drawable.ic_launcher).
-	                setPositiveButton("确定", new DialogInterface.OnClickListener() { 
-                     
-                    @Override 
-                    public void onClick(DialogInterface dialog, int which) { 
-                        // TODO Auto-generated method stub  
-                    } 
-                }).create(); 
-	        alertDialog.show();
+
+		if (arg0 == adapter.getCount() - 1) {
+			Dialog alertDialog = new AlertDialog.Builder(this).setTitle("提示").setMessage("连载小说，联网自动加载剩余章节!").setIcon(R.drawable.ic_launcher)
+					.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+						}
+					}).create();
+			alertDialog.show();
 		}
 	}
 

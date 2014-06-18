@@ -7,6 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class NetWorkUtil {
+//	public static String serviceURL = "http://bdservice.jd-app.com/";
+	public static String serviceURL = "http://192.168.18.132:8080/BookService/";
+	
 	/*public static String getReader(URL url) {
 		try {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();

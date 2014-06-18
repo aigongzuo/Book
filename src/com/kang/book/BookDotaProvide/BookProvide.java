@@ -79,8 +79,10 @@ public class BookProvide {
 
 	public boolean isHaveChaption(int chaption) {
 		LoadCaption();
-		if (LoadBookText(chaption).equals("")) {
-			return false;
+		if(!sharedPreferencesUtil.isContainsChaption(listCaption.get(chaption).getPath())){
+			if (!AssetsUtil.isContains(context, listCaption.get(chaption).getPath())) {
+				return false;
+			}
 		}
 		return true;
 	}

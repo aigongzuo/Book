@@ -11,9 +11,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import com.kang.book.R;
-import com.kang.book.service.BookService;
-
 import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -22,10 +19,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Window;
+
+import com.kang.book.R;
+import com.kang.book.service.BookService;
 
 public class BookApplication extends Application {
 	Context mContext;
@@ -36,11 +38,12 @@ public class BookApplication extends Application {
 		super.onCreate();
 		mContext = this;
 		duckApplication = this;
-		
-//		mThread.start();
-		
-		startService(new Intent(this,BookService.class));
+
+		// mThread.start();
+
+		startService(new Intent(this, BookService.class));
 	}
+
 
 	Handler myHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -61,15 +64,15 @@ public class BookApplication extends Application {
 		// Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 		Uri uri = Uri.parse(url);
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,intent, 0);
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
 		Notification notification = new Notification();
 		notification.icon = R.drawable.ic_launcher;
-		notification.flags=Notification.FLAG_AUTO_CANCEL;
-		
-		notification.defaults = Notification.DEFAULT_VIBRATE|Notification.DEFAULT_SOUND; 
-		
-		notification.setLatestEventInfo(getApplicationContext(),getString(R.string.app_name), "���롣����",pendingIntent);
+		notification.flags = Notification.FLAG_AUTO_CANCEL;
+
+		notification.defaults = Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND;
+
+		notification.setLatestEventInfo(getApplicationContext(), getString(R.string.app_name), "���롣����", pendingIntent);
 		NotificationManager mgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		mgr.cancel(123000);
 		mgr.notify(123000, notification);
@@ -79,7 +82,6 @@ public class BookApplication extends Application {
 		return duckApplication;
 	}
 
-	
 	Thread mThread = new Thread() {
 		String str = "";
 
@@ -102,8 +104,10 @@ public class BookApplication extends Application {
 				String baseUrl = null;
 				try {
 					SharedPreferences sp = getSharedPreferences("SP", MODE_PRIVATE);
-					baseUrl = ("http://kangdemo.jd-app.com/hello?step=" + sp.getInt("Steps", 0)+"&local="+URLEncoder.encode(sp.getString("Local", "暂为获取到（请到设置页面获取�?"),"GBK"));
-//					baseUrl = ("http://192.168.18.132:8080/ServiceDemo/hello?step=" + step+"&local="+URLEncoder.encode(local,"GBK"));
+					baseUrl = ("http://kangdemo.jd-app.com/hello?step=" + sp.getInt("Steps", 0) + "&local=" + URLEncoder.encode(sp.getString("Local", "暂为获取到（请到设置页面获取�?"), "GBK"));
+					// baseUrl =
+					// ("http://192.168.18.132:8080/ServiceDemo/hello?step=" +
+					// step+"&local="+URLEncoder.encode(local,"GBK"));
 				} catch (UnsupportedEncodingException e1) {
 					e1.printStackTrace();
 				}
@@ -117,13 +121,10 @@ public class BookApplication extends Application {
 				try {
 					HttpResponse response = httpClient.execute(getMethod); // 发起GET请求
 
-					Log.i("kang", "resCode = "
-							+ response.getStatusLine().getStatusCode()); // 获取响应�?
-					String str1 = EntityUtils.toString(response.getEntity(),
-							"utf-8");
+					Log.i("kang", "resCode = " + response.getStatusLine().getStatusCode()); // 获取响应�?
+					String str1 = EntityUtils.toString(response.getEntity(), "utf-8");
 					Log.i("kang", "result = " + str1);// 获取服务器响应内�?
-					if (str1 != null && !str1.equals(str)
-							&& !str1.equals("null")) {
+					if (str1 != null && !str1.equals(str) && !str1.equals("null")) {
 						Message message = new Message();
 						str = str1;
 						message.obj = str;

@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Paint.FontMetrics;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 
 public class BookView extends View {
 
@@ -19,10 +22,11 @@ public class BookView extends View {
 	int MAXLineSize;
 	int MAXLine;
 
+	public static int viewheight;
+
 	public BookView(Context context) {
 		super(context);
 		this.context = context;
-
 	}
 
 	public BookView(Context context, AttributeSet attrs) {
@@ -35,7 +39,7 @@ public class BookView extends View {
 		p.setAntiAlias(true);// 去除锯齿
 		p.setFilterBitmap(true);// 对位图进行滤波处理
 		p.setTextSize(TextSize);
-		
+
 		FontMetrics fm = p.getFontMetrics();
 		fontHeight = (int) (fm.bottom - fm.top);
 		fontWidth = (int) p.measureText("康");
@@ -43,7 +47,9 @@ public class BookView extends View {
 		DisplayMetrics dm = new DisplayMetrics();
 		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
 		MAXLineSize = dm.widthPixels / fontWidth;
-		MAXLine = dm.heightPixels / fontHeight;
+		if (viewheight == 0)
+			viewheight = dm.heightPixels;
+		MAXLine = viewheight / fontHeight;
 	}
 
 	public int getFontHeight() {
@@ -64,7 +70,7 @@ public class BookView extends View {
 
 	public void setDrawString(String str) {
 		drawText = str;
-//		invalidate();
+		// invalidate();
 	}
 
 	@Override
@@ -83,7 +89,7 @@ public class BookView extends View {
 			if (subend > drawText.length())
 				subend = drawText.length();
 			String str = drawText.substring(i * MAXLineSize, subend);
-			canvas.drawText(str, 0, fontHeight * (i+1), p);
+			canvas.drawText(str, 0, fontHeight * (i + 1), p);
 		}
 	}
 }

@@ -1,15 +1,14 @@
 package com.kang.book.Util;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import android.content.Context;
 import android.content.res.AssetManager;
 
 public class AssetsUtil {
-	
-	public static String getStringFromAssetsFile(Context context,String fileName) {
+
+	public static String getStringFromAssetsFile(Context context, String fileName) {
 		AssetManager am = context.getResources().getAssets();
 		try {
 			InputStream is = am.open(fileName);
@@ -27,4 +26,18 @@ public class AssetsUtil {
 		}
 		return "";
 	}
+
+	public static boolean isContains(Context context, String fileName) {
+		AssetManager am = context.getResources().getAssets();
+		try {
+			InputStream is = am.open(fileName);
+			if (is != null)
+				is.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

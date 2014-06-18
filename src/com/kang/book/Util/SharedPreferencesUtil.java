@@ -34,7 +34,7 @@ public class SharedPreferencesUtil {
 
 	public int getFontSize() {
 		SharedPreferences sp = context.getSharedPreferences("SP", context.MODE_PRIVATE);
-		return sp.getInt("FONT_SIZE", 24);
+		return sp.getInt("FONT_SIZE", 40);
 	}
 
 	public int getChapter() {
@@ -93,5 +93,22 @@ public class SharedPreferencesUtil {
 	public String getChaptionText(String name) {
 		SharedPreferences sp = context.getSharedPreferences("ChaptionText", context.MODE_PRIVATE);
 		return sp.getString(name, "");
+	}
+
+	public void SetNOID(String NOID) {
+		SharedPreferences sp = context.getSharedPreferences("Data", context.MODE_PRIVATE);
+		Editor editor = sp.edit();
+		editor.putString("NOID", NOID);
+		editor.commit();
+	}
+
+	public String GetNOID() {
+		SharedPreferences sp = context.getSharedPreferences("Data", context.MODE_PRIVATE);
+		return sp.getString("NOID", "0");
+	}
+
+	public boolean isContainsChaption(String key){
+		SharedPreferences sp = context.getSharedPreferences("SP", context.MODE_PRIVATE);
+		return sp.contains(key);
 	}
 }
